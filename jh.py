@@ -1,30 +1,30 @@
 uniques = [["exosuit",6],
-           ["shadowcloak"],
+           ["shadowcloak",4],
            ["cybersuit",5],
-           ["fiend crown"],
+           ["fiend crown",4],
            ["overlord"],
-           ["thompson"],
+           ["thompson",4],
            ["hammerhead",5],
            ["avalanche"],
-           ["vengeance"],
-           ["scrapgun"],
+           ["vengeance",4],
+           ["scrapgun",4],
            ["apocalypse",6],
            ["bft10k"],
            ["shadowhunter"],
-           ["firestrom"],
+           ["firestorm",4],
            ["calamity",5],
-           ["hate"],
+           ["hate",4],
            ["death",5],
-           ["love"],
+           ["love",4],
            ["bloodletter",5],
-           ["executioner"],
+           ["executioner",4],
            ["wavesplitter"],
            ["soulstealer"],
-           ["monster"],
+           ["monster",4],
            ["denial",5],
-           ["carnage"],
+           ["carnage",4],
            ["twin viper"],
-           ["void"],
+           ["void",4],
            ["firecrown"],
            ["vulcan"],
            ["wavedancer"]]
@@ -53,22 +53,22 @@ def name2seq(u):
     return out
 
 def export(dic):
+    if dic.get("here") is None:
+        print(str(id(dic))+" [label=\"\"]")
     for k,v in dic.items():
         if k=="here":
             print(str(id(dic))+" [label=\""+str(v)+"\"]")
         else:
-            if dic.get("here") is None:
-                print(str(id(dic))+" [label=\"\"]")
             print(str(id(dic))+" -> "+str(id(v))+" [label=\""+k+"\"]")
             export(v)
 
 dic = {}
 for u in uniques:
-    name = u[0]
+    name = u[0] if len(u)>1 else u[0]+" UNCONFIRMED"
     length = u[1] if len(u)>1 else default_length
     add(dic, name2seq(name[:length]), name)
-add(dic,["U","R","R"],"europa")
-add(dic,["R","R","U","U"],"io")
+add(dic,["U","R","R"],"EUROPA")
+add(dic,["R","R","U","U"],"IO")
 
 print("digraph {")
 export(dic)
