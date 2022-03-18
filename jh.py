@@ -19,7 +19,7 @@ uniques = [["Exosuit",6],
            ["Love",4],
            ["Bloodletter",5],
            ["Executioner",4],
-           ["Wavesplitter"],
+           ["Wavesplitter",5],
            ["Soulstealer"],
            ["Monster",4],
            ["Denial",5],
@@ -28,7 +28,7 @@ uniques = [["Exosuit",6],
            ["Void",4],
            ["Firecrown"],
            ["Vulcan"],
-           ["Wavedancer"]]
+           ["Wavedancer",6]]
 
 # You can manually add new paths here
 additional_paths = [["URR","Europa portal"],
