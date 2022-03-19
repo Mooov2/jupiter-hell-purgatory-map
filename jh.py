@@ -24,7 +24,7 @@ uniques = [["Exosuit",6],
            ["Monster",4],
            ["Denial",5],
            ["Carnage",4],
-           ["Twin viper"],
+           ["Viper",5],
            ["Void",4],
            ["Firecrown",6],
            ["Vulcan"],
@@ -35,7 +35,7 @@ additional_paths = [["URR","Europa portal"],
                     ["RRUU","Io portal"]]
 
 codes = ["U","R","D","L"]
-default_length=7
+default_length=10
 
 # generate the prefix tree (recursive function)
 def add(dic, seq, name):
@@ -80,7 +80,7 @@ dic = {}
 for u in uniques:
     name = u[0] if len(u)>1 else u[0]+"\nUNCONFIRMED"
     length = u[1] if len(u)>1 else default_length
-    add(dic, name2seq(name,length), name)
+    add(dic, name2seq(u[0],length), name)
 
 for p in additional_paths:
     add(dic,list(p[0]),p[1])
@@ -88,5 +88,7 @@ for p in additional_paths:
 print("digraph {")
 print("label=\"Jupiter Hell Purgatory Map\"")
 export(dic)
-print(str(id(dic))+" [shape=pentagon label=\"START\"]")
+print(str(id(dic))+" [shape=pentagon label=\"Purgatory\"]")
+print(str(id(dic))+" -> clueroom [label=\"Cathedral clue\nplayer-dependent\"]")
+print("clueroom [shape=oval label=\"Clue room\"]")
 print("}")
