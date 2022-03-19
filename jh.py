@@ -26,7 +26,7 @@ uniques = [["Exosuit",6],
            ["Carnage",4],
            ["Twin viper"],
            ["Void",4],
-           ["Firecrown"],
+           ["Firecrown",6],
            ["Vulcan"],
            ["Wavedancer",6]]
 
