@@ -20,7 +20,7 @@ uniques = [["Exosuit",6],
            ["Bloodletter",5],
            ["Executioner",4],
            ["Wavesplitter",5],
-           ["Soulstealer"],
+           # ["Soulstealer"], # no soulstealer, it seems
            ["Monster",4],
            ["Denial",5],
            ["Carnage",4],
