@@ -20,22 +20,25 @@ uniques = [["Exosuit",6],
            ["Bloodletter",5],
            ["Executioner",4],
            ["Wavesplitter",5],
-           ["Soulstealer"], # no soulstealer, it seems
+           ["Soulstealer [Bug?]",6],
            ["Monster",4],
            ["Denial",5],
            ["Carnage",4],
            ["Viper",5],
            ["Void",4],
            ["Firecrown",6],
-           ["Vulcan"],
+           ["Vulcan [Bug?]",5],
            ["Wavedancer",6]]
 
 # You can manually add new paths here
 additional_paths = [["URR","Europa portal"],
-                    ["RRUU","Io portal"]]
+                    ["RRUU","Io portal"],
+                    ["ULLDRURRUUULDLLU","Final boss portal"],
+                    ["ULLUL","Dante portal [Bug?]"]]
 
 codes = ["U","R","D","L"]
-default_length=10
+# default_length=10
+condensed=True
 
 # generate the prefix tree (recursive function)
 def add(dic, seq, name):
@@ -61,25 +64,30 @@ def name2seq(u,length):
     return out
 
 # export to graphviz format
-def export(dic):
-    if dic.get("here") is None:
-        print(str(id(dic))+" [shape=point, label=\"\"]")
-    for k,v in dic.items():
-        if k=="here":
-            if len(v)==1:
-                v=v[0]
-            if str(v).endswith("portal"):
-                print(str(id(dic))+" [shape=box, label=\""+str(v)+"\"]")
+def export(prefix,previous_dic,dic):
+    if condensed and len(dic)==1 and dic.get("here") is None:
+        for k,v in dic.items():
+            export(prefix+k,previous_dic,v)
+    else:
+        if dic.get("here") is None:
+            print(str(id(dic))+" [shape=point, label=\"\"]")
+        if prefix!="":
+            print(str(id(previous_dic))+" -> "+str(id(dic))+" [label=\""+prefix+"\"]")
+        for k,v in dic.items():
+            if k=="here":
+                if len(v)==1:
+                    v=v[0]
+                if "portal" in str(v):
+                    print(str(id(dic))+" [shape=box, label=\""+str(v)+"\"]")
+                else:
+                    print(str(id(dic))+" [label=\""+str(v)+"\"]")
             else:
-                print(str(id(dic))+" [label=\""+str(v)+"\"]")
-        else:
-            print(str(id(dic))+" -> "+str(id(v))+" [label=\""+k+"\"]")
-            export(v)
+                export(k,dic,v)
 
 dic = {}
 for u in uniques:
-    name = u[0] if len(u)>1 else u[0]+"\nUNCONFIRMED"
-    length = u[1] if len(u)>1 else default_length
+    name = u[0] # if len(u)>1 else u[0]+"\nUNCONFIRMED"
+    length = u[1] # if len(u)>1 else default_length
     add(dic, name2seq(u[0],length), name)
 
 for p in additional_paths:
@@ -87,8 +95,6 @@ for p in additional_paths:
 
 print("digraph {")
 print("label=\"Jupiter Hell Purgatory Map\"")
-export(dic)
+export("",dic,dic)
 print(str(id(dic))+" [shape=pentagon label=\"Purgatory\"]")
-print(str(id(dic))+" -> clueroom [label=\"Cathedral clue\nplayer-dependent\"]")
-print("clueroom [shape=oval label=\"Clue room\"]")
 print("}")
